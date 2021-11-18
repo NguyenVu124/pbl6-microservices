@@ -4,12 +4,11 @@ const Bill = new mongoose.Schema(
   {
     service: {
       type: String,
-      required: true,
     },
     additionalFee: { type: Number },
-    total: { type: Number, required: true },
-    checkIn: { type: Date, required: true },
-    checkOut: { type: Date, required: true },
+    total: { type: Number },
+    checkIn: { type: Date },
+    checkOut: { type: Date },
     status: { type: Boolean },
     room: {
       type: mongoose.Types.ObjectId,
