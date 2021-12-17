@@ -10,7 +10,7 @@ const createHotel = catchAsync(async (req, res) => {
 });
 
 const getHotels = catchAsync(async (req, res) => {
-  const result = await hotelService.getHotels();
+  const result = await hotelService.getHotels(req.query);
   res.send(result);
 });
 
@@ -23,7 +23,7 @@ const getHotel = catchAsync(async (req, res) => {
 });
 
 const updateHotel = catchAsync(async (req, res) => {
-  const hotel = await hotelService.updateHotelById(req.params.hotelId, req.body);
+  const hotel = await hotelService.updateHotelById(req.params.hotelId, req.body, req.file);
   res.send(hotel);
 });
 
@@ -35,12 +35,16 @@ const deleteHotel = catchAsync(async (req, res) => {
 
 const createRoom = catchAsync(async (req, res) => {
   const room = await hotelService.createRoom(req.body);
-  await hotelService.addRoomToHotel(room._id, req.body.hotel);
+  await hotelService.addRoomToHotel(room._id, req.body.idHotel);
   res.status(httpStatus.CREATED).send(room);
 });
-
 const getRooms = catchAsync(async (req, res) => {
-  const result = await hotelService.getRooms(req.params.hotelId);
+  const result = await hotelService.getRooms();
+  res.send(result);
+});
+
+const getRoomsByHotel = catchAsync(async (req, res) => {
+  const result = await hotelService.getRoomsByHotel(req.params.hotelId);
   res.send(result);
 });
 
@@ -68,8 +72,9 @@ module.exports = {
   getHotel,
   updateHotel,
   deleteHotel,
-  getRooms,
+  getRoomsByHotel,
   createRoom,
+  getRooms,
   getRoom,
   updateRoom,
   deleteRoom,

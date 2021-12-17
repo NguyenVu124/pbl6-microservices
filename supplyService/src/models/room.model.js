@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 
-const types = ['Single', 'Double', 'Family'];
+// const types = ['Single', 'Double', 'Family'];
 
 const Room = new mongoose.Schema({
-  hotel: { type: mongoose.Types.ObjectId, ref: 'Hotel' },
+  idHotel: { type: mongoose.Types.ObjectId, ref: 'Hotel' },
+  city: { type: String },
   price: { type: Number },
-  type: { type: String, enum: types },
+  type: { type: String },
   images: [{ type: String }],
   available: [{ type: Date }],
 });

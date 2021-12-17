@@ -1,5 +1,4 @@
 const httpStatus = require('http-status');
-const mongoose = require('mongoose');
 const { Hotel, Room } = require('../models');
 const ApiError = require('../utils/ApiError');
 
@@ -7,8 +6,9 @@ const createHotel = async (hotelBody) => {
   return Hotel.create(hotelBody);
 };
 
-const getHotels = async () => {
-  const hotels = await Hotel.find();
+const getHotels = async (query) => {
+  console.log(Object.keys(query)[0]);
+  const hotels = await Hotel.find(query);
   return hotels;
 };
 
@@ -16,10 +16,14 @@ const getHotelById = async (id) => {
   return Hotel.findById(id);
 };
 
-const updateHotelById = async (hotelId, updateBody) => {
+const updateHotelById = async (hotelId, updateBody, file) => {
   const hotel = await getHotelById(hotelId);
-  if (!hotel) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Hotel not found');
+  if (updateBody)
+    if (!hotel) {
+      throw new ApiError(httpStatus.NOT_FOUND, 'Hotel not found');
+    }
+  if (file) {
+    hotel.images.push(`http://localhost:5000/${file.path}`);
   }
   Object.assign(hotel, updateBody);
   await hotel.save();
@@ -41,7 +45,7 @@ const deleteHotelById = async (hotelId) => {
   return hotel;
 };
 
-const getRooms = async (hotelId) => {
+const getRoomsByHotel = async (hotelId) => {
   const roomsId = await Hotel.findById(hotelId).select('rooms');
   const rooms = await Room.find({ _id: roomsId.rooms });
   return rooms;
@@ -61,6 +65,11 @@ const addRoomToHotel = async (roomId, hotelId) => {
 
 const createRoom = async (roomBody) => {
   return Room.create(roomBody);
+};
+
+const getRooms = async () => {
+  const rooms = await Room.find().populate('idHotel').exec();
+  return rooms;
 };
 
 const getRoomById = async (id) => {
@@ -94,8 +103,9 @@ module.exports = {
   deleteAllRoomsOfHotel,
   deleteHotelById,
   addRoomToHotel,
-  getRooms,
+  getRoomsByHotel,
   createRoom,
+  getRooms,
   getRoomById,
   updateRoomById,
   deleteRoomById,

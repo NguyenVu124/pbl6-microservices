@@ -17,13 +17,13 @@ const getFeedbacksByServiceId = async (service, serviceId) => {
   let query = {};
   switch (service) {
     case 'restaurant':
-      query = { restaurant: serviceId };
+      query = { idRestaurant: serviceId };
       break;
     case 'hotel':
-      query = { hotel: serviceId };
+      query = { idHotel: serviceId };
       break;
     case 'selfVehicle':
-      query = { selfVehicle: serviceId };
+      query = { idSelfVehicle: serviceId };
       break;
     default:
       break;
@@ -57,15 +57,16 @@ const deleteFeedbackById = async (feedbackId) => {
 
 const addFeedbackToService = async (feedbackId, service) => {
   let detailService = {};
+
   switch (service.service) {
     case 'restaurant':
-      detailService = await restaurantService.getRestaurantById(service.restaurant);
+      detailService = await restaurantService.getRestaurantById(service.idRestaurant);
       break;
     case 'hotel':
-      detailService = await hotelService.getHotelById(service.hotel);
+      detailService = await hotelService.getHotelById(service.idHotel);
       break;
     case 'selfVehicle':
-      detailService = await selfVehicleService.getSelfVehicleById(service.selfVehicle);
+      detailService = await selfVehicleService.getSelfVehicleById(service.idSelfVehicle);
       break;
     default:
       throw new ApiError(httpStatus.FORBIDDEN, 'Error');

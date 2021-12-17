@@ -20,7 +20,8 @@ if (config.env !== 'test') {
   app.use(morgan.successHandler);
   app.use(morgan.errorHandler);
 }
-
+app.use('/avt', express.static('avt'));
+app.use('/images', express.static('images'));
 // set security HTTP headers
 app.use(helmet());
 

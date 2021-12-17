@@ -6,8 +6,8 @@ const createSelfVehicle = async (selfVehicleBody) => {
   return SelfVehicle.create(selfVehicleBody);
 };
 
-const getSelfVehicles = async () => {
-  const selfVehicles = await SelfVehicle.find();
+const getSelfVehicles = async (query) => {
+  const selfVehicles = await SelfVehicle.find(query);
   return selfVehicles;
 };
 

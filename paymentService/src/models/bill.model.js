@@ -1,20 +1,31 @@
 const mongoose = require('mongoose');
+const { toJSON } = require('./plugins');
 
-const Bill = new mongoose.Schema(
+const billSchema = new mongoose.Schema(
   {
-    service: {
-      type: String,
+    service: { type: String },
+    hotel: {
+      type: mongoose.Types.ObjectId,
+      ref: 'Hotel',
+    },
+    restaurant: {
+      type: mongoose.Types.ObjectId,
+      ref: 'Restaurant',
+    },
+    selfVehicle: {
+      type: mongoose.Types.ObjectId,
+      ref: 'SelfVehicle',
     },
     additionalFee: { type: Number },
     total: { type: Number },
     checkIn: { type: Date },
     checkOut: { type: Date },
     status: { type: Boolean },
+    guest: { type: mongoose.Types.ObjectId, ref: 'User' },
     room: {
       type: mongoose.Types.ObjectId,
       ref: 'Room',
     },
-    guest: { type: mongoose.Types.ObjectId, ref: 'User' },
     table: { type: mongoose.Types.ObjectId, ref: 'Table' },
     detailVehicle: { type: mongoose.Types.ObjectId, ref: 'DetailVehicle' },
   },
@@ -22,4 +33,7 @@ const Bill = new mongoose.Schema(
     timestamps: true,
   }
 );
-module.exports = mongoose.model('Bill', Bill);
+billSchema.plugin(toJSON);
+const Bill = mongoose.model('Bill', billSchema);
+
+module.exports = Bill;

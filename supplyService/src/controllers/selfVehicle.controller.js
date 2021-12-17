@@ -11,7 +11,7 @@ const createSelfVehicle = catchAsync(async (req, res) => {
 });
 
 const getSelfVehicles = catchAsync(async (req, res) => {
-  const result = await selfVehicleService.getSelfVehicles();
+  const result = await selfVehicleService.getSelfVehicles(req.query);
   res.send(result);
 });
 

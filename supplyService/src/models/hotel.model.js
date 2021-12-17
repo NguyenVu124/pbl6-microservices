@@ -3,19 +3,19 @@ const { toJSON } = require('./plugins');
 
 const hotelSchema = mongoose.Schema(
   {
-    name: { type: String, required: true, trim: true },
+    name: { type: String, trim: true },
     idUser: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    city: { type: String, required: true, trim: true },
+    city: { type: String, trim: true },
+    description: { type: String },
     address: {
       type: String,
-      required: true,
       trim: true,
     },
-    phone: { type: String, required: true, trim: true },
+    phone: { type: String, trim: true },
     totalRooms: { type: Number },
-    availableRooms: { type: Number, required: true },
+    availableRooms: { type: Number },
     vote: { type: Number, default: 2 },
-    imageCover: { type: String, required: true },
+    imageCover: { type: String },
     images: [{ type: String }],
     rooms: [
       {
@@ -23,6 +23,14 @@ const hotelSchema = mongoose.Schema(
         ref: 'Room',
       },
     ],
+    priceFrom: {
+      type: Number,
+      required: true,
+    },
+    priceTo: {
+      type: Number,
+      required: true,
+    },
     feedbacks: [
       {
         type: mongoose.Schema.Types.ObjectId,

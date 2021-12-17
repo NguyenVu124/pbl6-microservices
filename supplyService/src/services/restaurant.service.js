@@ -6,8 +6,8 @@ const createRestaurant = async (restaurantBody) => {
   return Restaurant.create(restaurantBody);
 };
 
-const getRestaurants = async () => {
-  const restaurants = await Restaurant.find();
+const getRestaurants = async (query) => {
+  const restaurants = await Restaurant.find(query);
   return restaurants;
 };
 

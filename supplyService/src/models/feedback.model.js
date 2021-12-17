@@ -15,12 +15,12 @@ const feedbackSchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: 'User',
     },
-    restaurant: {
+    idRestaurant: {
       type: mongoose.Types.ObjectId,
       ref: 'Restaurant',
     },
-    selfVehicle: { type: mongoose.Types.ObjectId, ref: 'SelfVehicle' },
-    hotel: { type: mongoose.Types.ObjectId, ref: 'Hotel' },
+    idSelfVehicle: { type: mongoose.Types.ObjectId, ref: 'SelfVehicle' },
+    idHotel: { type: mongoose.Types.ObjectId, ref: 'Hotel' },
   },
   {
     timestamps: true,

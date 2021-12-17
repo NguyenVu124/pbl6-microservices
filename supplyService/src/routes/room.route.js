@@ -1,64 +1,51 @@
 const express = require('express');
-const { feedbackController } = require('../controllers');
+const multer = require('multer');
+const { hotelController } = require('../controllers');
 const auth = require('../middlewares/auth');
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './images/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, new Date().toISOString() + file.originalname);
+  },
+});
+const upload = multer({
+  storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5,
+  },
+});
 
 const router = express.Router();
 
-router.route('/:userId').get(feedbackController.getFeedbacksByUserId);
-router
-  .route('/:service/:serviceId')
-  .get(feedbackController.getFeedbacksByServiceId)
-  .post(auth('manageFeedbacks'), feedbackController.createFeedback);
+router.route('/:hotelId/all').get(hotelController.getRoomsByHotel);
+
+router.route('/').get(hotelController.getRooms).post(auth('manageRooms'), hotelController.createRoom);
 
 router
-  .route('/:feedbackId')
-  .get(feedbackController.getFeedback)
-  .patch(auth('manageFeedbacks'), feedbackController.updateFeedback)
-  .delete(auth('manageFeedbacks'), feedbackController.deleteFeedback);
+  .route('/:roomId')
+  .get(hotelController.getRoom)
+  .patch(auth('manageRooms'), upload.single('images'), hotelController.updateRoom)
+  .delete(auth('manageRooms'), hotelController.deleteRoom);
+
 module.exports = router;
 
 /**
  * @swagger
  * tags:
- *   name: Feedback
- *   description: Feedback management and retrieval
+ *   name: Room
+ *   description: Room management and retrieval
  */
 
 /**
  * @swagger
- * /feedback/{userId}:
+ * /room/{hotelId}/all:
  *   get:
- *     summary: Get a feedback
+ *     summary: Get all room of hotel
  *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
- *     tags: [Feedback]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: User id
- *     responses:
- *       "200":
- *         description: OK
- *         content:
- *           application/json:
- *             schema
- *       "401":
- *       "403":
- *       "404":
- *
- */
-
-/**
- * @swagger
- * /feedback/{service}/{serviceId}:
- *   get:
- *     summary: Get feedback by service
- *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
- *     tags: [Feedback]
+ *     tags: [Room]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -75,73 +62,21 @@ module.exports = router;
  *           application/json:
  *             schema:
  *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
  *       "403":
+ *         $ref: '#/components/responses/Forbidden'
  *       "404":
- *
- *   post:
- *     summary: Create a feedback
- *     description:  Admins and Partner can create Feedback
- *     tags: [Feedback]
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - service
- *               - vote
- *               - idUser
- *               - idRestaurant
- *               - idSelfVehicle
- *               - idHotel
- *             properties:
- *               service:
- *                 type: string
- *               vote:
- *                 type: string
- *                 format: email
- *                 description: must be unique
- *               comment:
- *                 type: string
- *                 format: password
- *                 minLength: 8
- *                 description: At least one number and one letter
- *               idUser:
- *                  type: idUser
- *               idRestaurant:
- *                  type: idRestaurant
- *               idSelfVehicle:
- *                  type: idSelfVehicle
- *               idHotel:
- *                  type: idHotel
- *             example:
- *               service: hotel
- *               comment: ok
- *               vote: 4
- *               idUser: 61af6a598a479b6e18d60505
- *               idHotel: 61af6cff4d52068d26112109
- *     responses:
- *       "201":
- *         description: Created
- *         content:
- *           application/json:
- *             schema:
- *       "400":
- *       "401":
- *       "403":
+ *         $ref: '#/components/responses/NotFound'
  *
  */
 
 /**
  * @swagger
- * /feedback/{feedbackId}:
+ * /room/{roomId}:
  *   get:
- *     summary: Get a feedback
+ *     summary: Get a room
  *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
- *     tags: [Feedback]
+ *     tags: [Room]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -165,9 +100,9 @@ module.exports = router;
  *         $ref: '#/components/responses/NotFound'
  *
  *   patch:
- *     summary: Update a feedback
+ *     summary: Update a room
  *     description: Logged in users can only update their own information. Only admins can update other users.
- *     tags: [Feedback]
+ *     tags: [Room]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -184,7 +119,21 @@ module.exports = router;
  *           schema:
  *             type: object
  *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 description: must be unique
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 minLength: 8
+ *                 description: At least one number and one letter
  *             example:
+ *               name: fake name
+ *               email: fake@example.com
+ *               password: password1
  *     responses:
  *       "200":
  *         description: OK
@@ -200,9 +149,77 @@ module.exports = router;
  *         $ref: '#/components/responses/NotFound'
  *
  *   delete:
- *     summary: Delete a feedback
+ *     summary: Delete a room
  *     description: Logged in users can delete only themselves. Only admins can delete other users.
- *     tags: [Feedback]
+ *     tags: [Room]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *         description: User id
+ *     responses:
+ *       "200":
+ *         description: No content
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ */
+
+/**
+ * @swagger
+ * /room:
+ *   post:
+ *     summary: Create a room
+ *     description:  Admins and Partner can create hotel
+ *     tags: [Room]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - idHotel
+ *               - price
+ *               - type
+ *               - images
+ *               - available
+ *             properties:
+ *               idHotel:
+ *                 type: idHotel
+ *               price:
+ *                 type: Number
+ *               type:
+ *                 type: string
+ *                 enum: [Single, Double, Family]
+ *               images:
+ *                  type: array-string
+ *               available:
+ *                  type: array-Date
+ *             example:
+ *     responses:
+ *       "201":
+ *         description: Created
+ *         content:
+ *           application/json:
+ *             schema:
+ *       "400":
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *   get:
+ *     summary: Get all rooms
+ *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
+ *     tags: [Room]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -214,11 +231,15 @@ module.exports = router;
  *         description: User id
  *     responses:
  *       "200":
- *         description: No content
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
  *         $ref: '#/components/responses/Forbidden'
  *       "404":
  *         $ref: '#/components/responses/NotFound'
+ *
  */

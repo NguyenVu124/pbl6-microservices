@@ -10,7 +10,7 @@ const createRestaurant = catchAsync(async (req, res) => {
 });
 
 const getRestaurants = catchAsync(async (req, res) => {
-  const result = await restaurantService.getRestaurants();
+  const result = await restaurantService.getRestaurants(req.query);
   res.send(result);
 });
 

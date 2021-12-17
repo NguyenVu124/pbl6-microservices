@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
 
-const types = ['Xe máy', 'Ô tô 7 chỗ', 'Ô tô 4 chỗ', 'Xe đạp'];
+const types = ['Xe máy', 'Ô tô ', 'Xe đạp'];
 
 const SelfVehicle = new mongoose.Schema({
-  type: { type: String, enum: types, required: true, default: 'Xe máy' },
+  name: {
+    type: String,
+  },
+  type: { type: String, enum: types, required: true },
   idUser: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   feedBacks: [
     {

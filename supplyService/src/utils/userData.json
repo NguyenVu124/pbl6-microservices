@@ -1,0 +1,93 @@
+[
+  {
+    "name": "Hoàng Nguyên Vũ",
+    "email": "hoangnguyenvubk@gmail.com",
+    "password": "nguyenvu124",
+    "role": "guest",
+    "birth": "12/04/2000",
+    "phone": "0339878481",
+    "gender": "male",
+    "identityNumber": "191969481"
+  },
+  {
+    "name": "Novotel",
+    "email": "novotel@gmail.com",
+    "password": "novotel123",
+    "role": "partner",
+    "phone": "0339878481",
+    "typeBusiness": "hotel",
+    "businessIdentifier": "CMD1234124"
+  },
+  {
+    "name": "GreenBamboo",
+    "email": "greenbamboo@gmail.com",
+    "password": "bamboo123",
+    "role": "partner",
+    "phone": "0339878482",
+    "typeBusiness": "hotel",
+    "businessIdentifier": "CMD1234125"
+  },
+  {
+    "name": "HaiAn",
+    "email": "haian@gmail.com",
+    "password": "haian123",
+    "role": "partner",
+    "phone": "0339878382",
+    "typeBusiness": "hotel",
+    "businessIdentifier": "CMD21234125"
+  },
+  {
+    "name": "Seafood",
+    "email": "seafood@gmail.com",
+    "password": "seafood123",
+    "role": "partner",
+    "phone": "0339878482",
+    "typeBusiness": "restaurant",
+    "businessIdentifier": "CMD1234125"
+  },
+  {
+    "name": "GrabBeer",
+    "email": "grabbeer@gmail.com",
+    "password": "grabbeer123",
+    "role": "partner",
+    "phone": "0339878482",
+    "typeBusiness": "restaurant",
+    "businessIdentifier": "CMD1234125"
+  },
+  {
+    "name": "Hai San Pho",
+    "email": "haisanpho@gmail.com",
+    "password": "haisanpho123",
+    "role": "partner",
+    "phone": "0339878482",
+    "typeBusiness": "restaurant",
+    "businessIdentifier": "CMD1234125"
+  },
+  {
+    "name": "Xe tu lai Da Nang",
+    "email": "xetulaidn@gmail.com",
+    "password": "xetulaidn123",
+    "role": "partner",
+    "phone": "0339878481",
+    "typeBusiness": "self vehicle",
+    "businessIdentifier": "CMD12341255"
+  },
+  {
+    "name": "Xe tu lai song Han",
+    "email": "xetulaish@gmail.com",
+    "password": "xetulaish123",
+    "role": "partner",
+    "phone": "0339878489",
+    "typeBusiness": "self vehicle",
+    "businessIdentifier": "CMD12341255"
+  },
+  {
+    "name": "Xe tu lai Son Tra",
+    "email": "xetulaist@gmail.com",
+    "password": "xetulaist123",
+    "role": "partner",
+    "phone": "0339878484",
+    "typeBusiness": "self vehicle",
+    "businessIdentifier": "CMD123412553"
+  }
+]

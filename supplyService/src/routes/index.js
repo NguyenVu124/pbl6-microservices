@@ -5,6 +5,9 @@ const hotelRoute = require('./hotel.route');
 const feedbackRoute = require('./feedback.route');
 const restaurantRoute = require('./restaurant.route');
 const selfVehicleRoute = require('./selfVehicle.route');
+const roomRoute = require('./room.route');
+const tableRoute = require('./table.route');
+const detailVehicleRoute = require('./detailVehicle.route');
 
 const router = express.Router();
 
@@ -25,6 +28,18 @@ const defaultRoutes = [
   {
     path: '/selfVehicle',
     route: selfVehicleRoute,
+  },
+  {
+    path: '/room',
+    route: roomRoute,
+  },
+  {
+    path: '/table',
+    route: tableRoute,
+  },
+  {
+    path: '/detailVehicle',
+    route: detailVehicleRoute,
   },
 ];
 
