@@ -25,11 +25,9 @@ const hotelSchema = mongoose.Schema(
     ],
     priceFrom: {
       type: Number,
-      required: true,
     },
     priceTo: {
       type: Number,
-      required: true,
     },
     feedbacks: [
       {

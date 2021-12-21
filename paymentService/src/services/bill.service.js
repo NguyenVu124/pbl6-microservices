@@ -5,13 +5,16 @@ const ApiError = require('../utils/ApiError');
 const CheckDateValid = require('../utils/CheckDateValid');
 
 const createBill = async (billBody) => {
-  const checkIn = billBody.checkIn.substring(0, 10).split('-');
-  // console.log(checkIn);
-  const checkOut = billBody.checkOut.substring(0, 10).split('-');
-  const availables = await Room.findById(billBody.room).populate('available-_id');
-  if (CheckDateValid(checkIn, checkOut, availables.available)) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Dates has been taken');
+  if (billBody.service === 'hotel') {
+    const checkIn = billBody.checkIn.substring(0, 10).split('-');
+    // console.log(checkIn);
+    const checkOut = billBody.checkOut.substring(0, 10).split('-');
+    const availables = await Room.findById(billBody.room).populate('available-_id');
+    if (CheckDateValid(checkIn, checkOut, availables.available)) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Dates has been taken');
+    }
   }
+
   return Bill.create(billBody);
 };
 

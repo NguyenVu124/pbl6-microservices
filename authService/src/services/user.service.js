@@ -6,6 +6,7 @@ const createUser = async (userBody) => {
   if (await User.isEmailTaken(userBody.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
+
   return User.create(userBody);
 };
 
@@ -23,13 +24,17 @@ const getUserByEmail = async (email) => {
   return User.findOne({ email });
 };
 
-const updateUserById = async (userId, updateBody) => {
+const updateUserById = async (userId, updateBody, file) => {
   const user = await getUserById(userId);
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
   if (updateBody.email && (await User.isEmailTaken(updateBody.email, userId))) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
+  }
+  if (file != null) {
+    // eslint-disable-next-line no-param-reassign
+    updateBody.avt = `http://localhost:5000/${file.path}`;
   }
   Object.assign(user, updateBody);
   await user.save();

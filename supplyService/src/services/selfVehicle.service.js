@@ -11,6 +11,11 @@ const getSelfVehicles = async (query) => {
   return selfVehicles;
 };
 
+const getDetailVehicles = async (query) => {
+  const detailVehicles = await DetailVehicle.find(query).populate('idSelfVehicle').exec();
+  return detailVehicles;
+};
+
 const getSelfVehicleById = async (id) => {
   return SelfVehicle.findById(id);
 };
@@ -26,7 +31,7 @@ const updateSelfVehicleById = async (selfVehicleId, updateBody) => {
 };
 
 const deleteAllDetailVehiclesOfSelfVehicle = async (selfVehicleId) => {
-  await DetailVehicle.remove({ relfVehicle: selfVehicleId }, (err) => {
+  await DetailVehicle.remove({ selfVehicle: selfVehicleId }, (err) => {
     if (err) throw new ApiError(httpStatus.NOT_FOUND, `${err}`);
   });
 };
@@ -40,34 +45,34 @@ const deleteSelfVehicleById = async (selfVehicleId) => {
   return selfVehicle;
 };
 
-const getDetailVehicles = async (selfVehicleId) => {
-  const detailVehiclesId = await SelfVehicle.findById(selfVehicleId).select('detailVehicles');
-  const detailVehicles = await DetailVehicle.find({ _id: detailVehiclesId.detailVehicles });
+const getDetailVehiclesBySelfVehicle = async (selfVehicleId) => {
+  const detailVehiclesId = await SelfVehicle.findById(selfVehicleId).select('vehicles');
+  const detailVehicles = await DetailVehicle.find({ _id: detailVehiclesId.vehicles }).populate('idSelfVehicle').exec();
   return detailVehicles;
 };
 
-const addRoomToSelfVehicle = async (detailVehicleId, selfVehicleId) => {
+const addDetailVehicleToSelfVehicle = async (detailVehicleId, selfVehicleId) => {
   const selfVehicle = await getSelfVehicleById(selfVehicleId);
   if (!selfVehicle) {
     throw new ApiError(httpStatus.NOT_FOUND, 'SelfVehicle not found');
   }
-  const { detailVehicles } = selfVehicle;
-  detailVehicles.push(detailVehicleId);
-  const updateBody = { detailVehicles };
+  const { vehicles } = selfVehicle;
+  vehicles.push(detailVehicleId);
+  const updateBody = { vehicles };
   Object.assign(selfVehicle, updateBody);
   await selfVehicle.save();
 };
 
-const createRoom = async (detailVehicleBody) => {
+const createDetailVehicle = async (detailVehicleBody) => {
   return DetailVehicle.create(detailVehicleBody);
 };
 
-const getRoomById = async (id) => {
-  return DetailVehicle.findById(id);
+const getDetailVehicleById = async (id) => {
+  return DetailVehicle.findById(id).populate('idSelfVehicle').exec();
 };
 
-const updateRoomById = async (detailVehicleId, updateBody) => {
-  const detailVehicle = await getRoomById(detailVehicleId);
+const updateDetailVehicleById = async (detailVehicleId, updateBody) => {
+  const detailVehicle = await getDetailVehicleById(detailVehicleId);
   if (!detailVehicle) {
     throw new ApiError(httpStatus.NOT_FOUND, 'DetailVehicle not found');
   }
@@ -76,8 +81,8 @@ const updateRoomById = async (detailVehicleId, updateBody) => {
   return detailVehicle;
 };
 
-const deleteRoomById = async (detailVehicleId) => {
-  const detailVehicle = await getRoomById(detailVehicleId);
+const deleteDetailVehicleById = async (detailVehicleId) => {
+  const detailVehicle = await getDetailVehicleById(detailVehicleId);
   if (!detailVehicle) {
     throw new ApiError(httpStatus.NOT_FOUND, 'DetailVehicle not found');
   }
@@ -92,10 +97,11 @@ module.exports = {
   updateSelfVehicleById,
   deleteAllDetailVehiclesOfSelfVehicle,
   deleteSelfVehicleById,
-  addRoomToSelfVehicle,
+  addDetailVehicleToSelfVehicle,
+  getDetailVehiclesBySelfVehicle,
   getDetailVehicles,
-  createRoom,
-  getRoomById,
-  updateRoomById,
-  deleteRoomById,
+  createDetailVehicle,
+  getDetailVehicleById,
+  updateDetailVehicleById,
+  deleteDetailVehicleById,
 };

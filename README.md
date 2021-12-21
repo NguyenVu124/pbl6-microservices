@@ -1,0 +1,1 @@
+docker build --build-arg DOCKER_ENV=production -t pbl6 . 

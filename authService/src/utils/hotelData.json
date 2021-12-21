@@ -1,0 +1,35 @@
+[
+  {
+    "name": "Novotel",
+    "idUser": "61af6a598a479b6e18d60505",
+    "city": "Đà Nẵng",
+    "address": "36 Bạch Đằng, Street, Hải Châu, Đà Nẵng",
+    "phone": "0339878481",
+    "totalRooms": 100,
+    "availableRooms": 50,
+    "imageCover": "#",
+    "images": []
+  },
+  {
+    "name": "GreenBamboo",
+    "idUser": "61af6a598a479b6e18d60505",
+    "city": "Đà Nẵng",
+    "address": "158 Phan Châu Trinh, Phước Ninh, Hải Châu, Đà Nẵng",
+    "phone": "0339878481",
+    "totalRooms": 100,
+    "availableRooms": 50,
+    "imageCover": "#",
+    "images": []
+  },
+  {
+    "name": "HaiAn",
+    "idUser": "61af6a598a479b6e18d60505",
+    "city": "Đà Nẵng",
+    "address": "278 Võ Nguyên Giáp, Bắc Mỹ Phú, Ngũ Hành Sơn, Đà Nẵng",
+    "phone": "0339878481",
+    "totalRooms": 100,
+    "availableRooms": 50,
+    "imageCover": "#",
+    "images": []
+  }
+]

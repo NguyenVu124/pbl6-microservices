@@ -4,9 +4,12 @@ const auth = require('../middlewares/auth');
 
 const router = express.Router();
 
-router.route('/:selfVehicleId/all').get(selfVehicleController.getDetailVehicles);
+router.route('/:selfVehicleId/all').get(selfVehicleController.getDetailVehiclesBySelfVehicle);
 
-router.route('/').post(auth('manageDetailVehicles'), selfVehicleController.createDetailVehicle);
+router
+  .route('/')
+  .get(selfVehicleController.getDetailVehicles)
+  .post(auth('manageDetailVehicles'), selfVehicleController.createDetailVehicle);
 
 router
   .route('/:detailVehicleId')
@@ -158,4 +161,29 @@ module.exports = router;
  *       "401":
  *       "403":
  *
+ *   get:
+ *     summary: Get all detailVehicles
+ *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
+ *     tags: [DetailVehicle]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: User id
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
  */

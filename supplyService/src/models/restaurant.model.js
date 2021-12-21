@@ -6,12 +6,12 @@ const Restaurant = new mongoose.Schema({
   address: { type: String, required: true },
   description: { type: String },
   name: { type: String },
-  open: { type: Date },
-  close: { type: Date },
+  open: { type: String },
+  close: { type: String },
   type: { type: String },
   totalTables: { type: Number, required: true },
   availableTables: { type: Number, required: true },
-  feedBacks: [
+  feedbacks: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'FeedBack',
@@ -21,6 +21,7 @@ const Restaurant = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  fee: { type: Number, required: true },
   priceTo: {
     type: Number,
     required: true,

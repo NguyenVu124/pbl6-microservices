@@ -7,7 +7,7 @@ const router = express.Router();
 router.route('/:userId').post(auth('manageRestaurants'), restaurantController.createRestaurant);
 router.route('/').get(restaurantController.getRestaurants);
 router
-  .route('/:restaurantId')
+  .route('/:restaurantId/detail')
   .get(restaurantController.getRestaurant)
   .patch(auth('manageRestaurants'), restaurantController.updateRestaurant)
   .delete(auth('manageRestaurants'), restaurantController.deleteRestaurant);
@@ -92,7 +92,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /restaurant/{restaurantId}:
+ * /restaurant/{restaurantId}/detail:
  *   get:
  *     summary: Get a restaurant
  *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.

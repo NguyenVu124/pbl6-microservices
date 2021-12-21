@@ -7,7 +7,7 @@ const router = express.Router();
 router.route('/:userId').post(auth('manageSelfVehicles'), selfVehicleController.createSelfVehicle);
 router.route('/').get(selfVehicleController.getSelfVehicles);
 router
-  .route('/:selfVehicleId')
+  .route('/:selfVehicleId/detail')
   .get(selfVehicleController.getSelfVehicle)
   .patch(auth('manageSelfVehicles'), selfVehicleController.updateSelfVehicle)
   .delete(auth('manageSelfVehicles'), selfVehicleController.deleteSelfVehicle);
@@ -90,7 +90,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /selfVehicle/{selfVehicleId}:
+ * /selfVehicle/{selfVehicleId}/detail:
  *   get:
  *     summary: Get a SelfVehicle
  *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.

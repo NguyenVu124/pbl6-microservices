@@ -11,6 +11,10 @@ const userSchema = mongoose.Schema(
       required: true,
       trim: true,
     },
+    avt: {
+      type: String,
+      default: '#',
+    },
     email: {
       type: String,
       required: true,
@@ -55,6 +59,7 @@ const userSchema = mongoose.Schema(
     },
     isValid: {
       type: Boolean,
+      default: false,
     },
     gender: { type: String, enum: gender },
     identityNumber: {

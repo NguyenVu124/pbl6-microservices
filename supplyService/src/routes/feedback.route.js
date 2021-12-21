@@ -5,10 +5,8 @@ const auth = require('../middlewares/auth');
 const router = express.Router();
 
 router.route('/:userId').get(feedbackController.getFeedbacksByUserId);
-router
-  .route('/:service/:serviceId')
-  .get(feedbackController.getFeedbacksByServiceId)
-  .post(auth('manageFeedbacks'), feedbackController.createFeedback);
+router.route('/:service/:serviceId').get(feedbackController.getFeedbacksByServiceId).post(feedbackController.createFeedback);
+// auth('manageFeedbacks'),
 
 router
   .route('/:feedbackId')

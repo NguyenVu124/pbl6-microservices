@@ -4,6 +4,7 @@ const { toJSON } = require('./plugins');
 const billSchema = new mongoose.Schema(
   {
     service: { type: String },
+    name: { type: String },
     hotel: {
       type: mongoose.Types.ObjectId,
       ref: 'Hotel',
@@ -26,7 +27,7 @@ const billSchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: 'Room',
     },
-    table: { type: mongoose.Types.ObjectId, ref: 'Table' },
+    chairs: { type: Number, default: 2 },
     detailVehicle: { type: mongoose.Types.ObjectId, ref: 'DetailVehicle' },
   },
   {

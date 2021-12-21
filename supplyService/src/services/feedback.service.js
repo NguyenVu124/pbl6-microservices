@@ -28,7 +28,7 @@ const getFeedbacksByServiceId = async (service, serviceId) => {
     default:
       break;
   }
-  const feedbacks = await Feedback.find(query);
+  const feedbacks = await Feedback.find(query).populate('idUser').exec();
   return feedbacks;
 };
 
