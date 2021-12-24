@@ -1,10 +1,8 @@
 const express = require('express');
-const authRoute = require('./auth.route');
-const userRoute = require('./user.route');
+
 const hotelRoute = require('./hotel.route');
 const roomRoute = require('./room.route');
-const billRoute = require('./bill.route');
-const docsRoute = require('./docs.route');
+
 const feedbackRoute = require('./feedback.route');
 const restaurantRoute = require('./restaurant.route');
 const tableRoute = require('./table.route');
@@ -16,14 +14,6 @@ const router = express.Router();
 
 const defaultRoutes = [
   {
-    path: '/auth',
-    route: authRoute,
-  },
-  {
-    path: '/users',
-    route: userRoute,
-  },
-  {
     path: '/hotel',
     route: hotelRoute,
   },
@@ -31,10 +21,7 @@ const defaultRoutes = [
     path: '/room',
     route: roomRoute,
   },
-  {
-    path: '/bill',
-    route: billRoute,
-  },
+
   {
     path: '/feedback',
     route: feedbackRoute,
@@ -54,10 +41,6 @@ const defaultRoutes = [
   {
     path: '/detailVehicle',
     route: detailVehicleRoute,
-  },
-  {
-    path: '/docs',
-    route: docsRoute,
   },
 ];
 
